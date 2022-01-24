@@ -10,13 +10,16 @@ import TxnModal from "./TxnModal";
 import IssuedTreasuries from "./tables/IssuedTreasuries";
 import BoughtTreasuries from "./tables/BoughtTreasuries";
 import PaidTreasuries from "./tables/PaidTreasuries";
+import BuyModal from "./BuyModal";
 
 function Hero({ currAddr, signer }) {
   //Component State
   const [loading, setLoading] = useState(false);
-  const [justVoted, setJustVoted] = useState(false);
+  const [buying, setBuying] = useState(false);
+  const [bought, setBought] = useState(false);
   const [errMessage, setErrMessage] = useState(null);
   const [txnHash, setTxnHash] = useState(null);
+  const [selected, setSelected] = useState(null);
   //Context
   const data = useContext(AppContext);
   //Refs
@@ -24,6 +27,8 @@ function Hero({ currAddr, signer }) {
   const ErrModal = React.forwardRef((props, ref) => {
     return <MetaMaskErrModal ref={ref}>{props.children}</MetaMaskErrModal>;
   });
+
+  console.log("loading", loading);
 
   return (
     <div className="Hero">
@@ -52,7 +57,7 @@ function Hero({ currAddr, signer }) {
         </h3>
         <div className="Hero__CTAContainer">
           <div className="Hero__MainTable">
-            <IssuedTreasuries currAddr={currAddr} signer={signer} />
+            <IssuedTreasuries setBuying={setBuying} setSelected={setSelected} />
             <BoughtTreasuries currAddr={currAddr} signer={signer} />
             <PaidTreasuries currAddr={currAddr} signer={signer} />
           </div>
@@ -63,9 +68,19 @@ function Hero({ currAddr, signer }) {
       <TxnModal
         chainId={data.chainId}
         address={currAddr.length > 0 ? currAddr : data.currentAddress}
-        justVoted={justVoted}
-        setJustVoted={setJustVoted}
+        bought={bought}
+        setBought={setBought}
         txnHash={txnHash}
+      />
+      <BuyModal
+        signer={signer}
+        buying={buying}
+        selected={selected}
+        setBuying={setBuying}
+        setErrMessage={setErrMessage}
+        setLoading={setLoading}
+        setTxnHash={setTxnHash}
+        setBought={setBought}
       />
     </div>
   );

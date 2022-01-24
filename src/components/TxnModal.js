@@ -3,13 +3,13 @@ import "../styles/TxnModal.css";
 import { ReactComponent as Close } from "../assets/CloseX.svg";
 import { truncateAddr } from "../utils/helpers";
 
-function TxnModal({ chainId, address, justVoted, setJustVoted, txnHash }) {
+function TxnModal({ chainId, address, bought, setBought, txnHash }) {
   const closeModal = () => {
-    setJustVoted(false);
+    setBought(false);
   };
 
   return (
-    <div className="TxnModal" style={{ display: justVoted ? "flex" : "none" }}>
+    <div className="TxnModal" style={{ display: bought ? "flex" : "none" }}>
       <div className="TxnModal__Content">
         <div className="TxnModal__Exit">
           <Close className="TxnModal__ExitIcon" onClick={closeModal} />
@@ -17,23 +17,29 @@ function TxnModal({ chainId, address, justVoted, setJustVoted, txnHash }) {
         <div className="TxnModal__Message">
           <h1>
             {address
-              ? `Thank you for voting, ${truncateAddr(address)}!`
-              : "Thank you for voting!"}
+              ? `Thank you for buying a treasury, ${truncateAddr(address)}!`
+              : "Thank you for buying a treasury!"}
           </h1>
           <p>To view your transaction on etherscan, click below:</p>
           {txnHash ? (
-            chainId === "0x1" ? (
+            chainId === "Mainnet" ? (
               <a
                 href={`https://etherscan.io/tx/${txnHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >{`https://etherscan.io/tx/${txnHash}`}</a>
-            ) : (
+            ) : chainId === "Rinkeby" ? (
               <a
                 href={`https://rinkeby.etherscan.io/tx/${txnHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >{`https://rinkeby.etherscan.io/tx/${txnHash}`}</a>
+            ) : (
+              <a
+                href={`https://ropsten.etherscan.io/tx/${txnHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >{`https://ropsten.etherscan.io/tx/${txnHash}`}</a>
             )
           ) : null}
         </div>

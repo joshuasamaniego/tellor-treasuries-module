@@ -70,9 +70,11 @@ function App() {
         clone.durationSeconds = clone.duration;
         clone.duration = timeConverter(clone.duration);
         clone.maxAmount = `${ethers.utils.formatEther(clone.maxAmount)} TRB`;
-        clone.totalLocked = `${ethers.utils.formatEther(
-          clone.totalLocked
-        )} TRB`;
+        // CHANGE THIS BACK BEFORE FINISHING
+        // clone.totalLocked = `${ethers.utils.formatEther(
+        //   clone.totalLocked
+        // )} TRB`;
+        clone.totalLocked = "0 TRB";
         clone.rate = `${clone.rate / 100}%`;
         clone.treasuryName = nameHelper(clone.dateStarted);
         clone.payoutDate = timerHelper(

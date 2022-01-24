@@ -12,6 +12,10 @@
   cursor: pointer;
   background-color: #fafafa;
 }
+.Global__Button:disabled {
+  opacity: 0.4;
+}
 .Global__Button:disabled:hover {
   cursor: not-allowed;
+  background-color: #2dfc9f;
 }

@@ -1,17 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import "../../styles/AllTables.css";
 import { EventContext } from "../../App";
-import { AppContext } from "../../index";
-//Utils
-import Button from "../global/Button";
 //Assets
 import RedX from "../../assets/off_close.svg";
 import GreenCheck from "../../assets/circle_check.svg";
 
-function IssuedTreasuries({ currAddr, signer }) {
+function IssuedTreasuries({ setBuying, setSelected }) {
   //Context
   const treasuryData = useContext(EventContext);
-  const appData = useContext(AppContext);
   //Component State
   const [issuedData, setIssuedData] = useState(null);
 
@@ -24,8 +20,11 @@ function IssuedTreasuries({ currAddr, signer }) {
     };
   }, [treasuryData]);
 
-  console.log("appData", appData);
-  console.log("issuedData", issuedData);
+  //Function Handlers
+  const handleSelect = (treasury) => {
+    setSelected(treasury);
+    setBuying(true);
+  };
 
   return (
     <div className="AllTables__Container">
@@ -44,25 +43,31 @@ function IssuedTreasuries({ currAddr, signer }) {
         </thead>
         <tbody className="IssuedTreasuries__Body">
           {issuedData &&
-            issuedData.map((event) => (
-              <tr key={event.id}>
-                <td>{event.treasuryName}</td>
-                <td>{event.maxAmount}</td>
-                <td>{event.rate}</td>
-                <td>{event.duration}</td>
-                <td>{event.payoutDate}</td>
+            issuedData.map((treasury) => (
+              <tr key={treasury.id}>
+                <td>{treasury.treasuryName}</td>
+                <td>{treasury.maxAmount}</td>
+                <td>{treasury.rate}</td>
+                <td>{treasury.duration}</td>
+                <td>{treasury.payoutDate}</td>
                 <td>
                   <img
-                    src={event.active ? GreenCheck : RedX}
+                    src={treasury.active ? GreenCheck : RedX}
                     alt={
-                      event.active
+                      treasury.active
                         ? "active treasury icon"
                         : "inactive treasury icon"
                     }
                   />
                 </td>
                 <td>
-                  <Button children={"Buy This Treasury"} />
+                  <button
+                    children={"Buy This Treasury"}
+                    onClick={() => handleSelect(treasury)}
+                    className="Global__Button"
+                  >
+                    Buy This Treasury
+                  </button>
                 </td>
               </tr>
             ))}
