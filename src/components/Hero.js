@@ -4,12 +4,17 @@ import "../styles/Hero.css";
 import { ethers } from "ethers";
 //Context
 import { AppContext } from "../index";
-//Utils
+//Utils/Helpers
 import TellorGovABI from "../utils/TellorGovABI.json";
+import { truncateAddr } from "../utils/helpers";
 //Components
 import MetaMaskErrModal from "./MetaMaskErrModal";
 import TxnLoader from "./TxnLoader";
 import TxnModal from "./TxnModal";
+//Table Components
+import IssuedTreasuries from "./tables/IssuedTreasuries";
+import BoughtTreasuries from "./tables/BoughtTreasuries";
+import PaidTreasuries from "./tables/PaidTreasuries";
 
 function Hero({ currAddr, signer }) {
   //Component State
@@ -19,126 +24,41 @@ function Hero({ currAddr, signer }) {
   const [txnHash, setTxnHash] = useState(null);
   //Context
   const data = useContext(AppContext);
-  //Globals
-  const voteIdMainnet = 3; //current
-  const voteIdRinkeby = 9; //current
   //Refs
   const ref = React.createRef();
   const ErrModal = React.forwardRef((props, ref) => {
     return <MetaMaskErrModal ref={ref}>{props.children}</MetaMaskErrModal>;
   });
-  //Handlers
-  const handleVote = async (bool) => {
-    if (!data) return;
-
-    let contract;
-    let didAlreadyVote;
-
-    if (data.chainId === "0x1") {
-      contract = new ethers.Contract(
-        data.tellorGovMainnet,
-        TellorGovABI,
-        Object.keys(signer) > 0 ? signer : data.signer
-      );
-
-      didAlreadyVote = await contract.didVote(
-        voteIdMainnet,
-        currAddr.length > 0 ? currAddr : data.currentAddress
-      );
-
-      if (!didAlreadyVote) {
-        setLoading(true);
-        try {
-          contract
-            .vote(voteIdMainnet, bool, false)
-            .then((res) => {
-              setLoading(false);
-              setTxnHash(res.hash);
-              setJustVoted(true);
-            })
-            .catch((err) => {
-              console.log("MetaMask Txn Err: ", err);
-              setLoading(false);
-              setErrMessage(err.message);
-            });
-        } catch (err) {
-          // console.log("ERR::: ", err.message);
-          setErrMessage(err.message);
-        }
-      } else {
-        setErrMessage(
-          "Execution reverted: You already voted at this address on this network. Thank you for voting!"
-        );
-      }
-    } else if (data.chainId === "0x4") {
-      contract = new ethers.Contract(
-        data.tellorGovRinkeby,
-        TellorGovABI,
-        Object.keys(signer) > 0 ? signer : data.signer
-      );
-
-      didAlreadyVote = await contract.didVote(
-        voteIdRinkeby,
-        currAddr.length > 0 ? currAddr : data.currentAddress
-      );
-
-      if (!didAlreadyVote) {
-        setLoading(true);
-        try {
-          contract
-            .vote(voteIdRinkeby, bool, false)
-            .then((res) => {
-              setLoading(false);
-              setTxnHash(res.hash);
-              setJustVoted(true);
-            })
-            .catch((err) => {
-              //console.log("MetaMask Txn Err: ", err);
-              setLoading(false);
-              setErrMessage(err.message);
-            });
-        } catch (err) {
-          // console.log("MetaMask Txn Err:: ", err.message);
-          setErrMessage(err.message);
-        }
-      } else {
-        setErrMessage(
-          "Execution reverted: You already voted at this address on this network. Thank you for voting!"
-        );
-      }
-    }
-  };
 
   return (
     <div className="Hero">
       <div className="Hero__View">
-        <h1>Tellor Treasuries!</h1>
-        <h2>
-          Tellor is now voting for a treasuries upgrade. Cast your vote below!
-        </h2>
-        <h3 className="Hero__LinkToWhitePaper">
-          <a href="https://www.tellor.io/static/media/tellorX-whitepaper.f6527d55.pdf">
-            Link to the Tellor Whitepaper
+        <h1>Tellor Treasuries</h1>
+        <h2>{`Account Page for ${
+          currAddr.length > 0
+            ? truncateAddr(currAddr)
+            : truncateAddr(data.currentAddress)
+        }`}</h2>
+        <h3>
+          This page is for displaying your current address' interaction with the
+          Tellor Treasuries contract.
+        </h3>
+        <h3>
+          Take a look at the current treasury available, and if you would like
+          to stake your TRB in order to receive the return rate, click on "Buy
+          Treasury" and fill out the form with how much you'd like to invest.
+        </h3>
+        <h3>
+          For more information on how Tellor Treasuries works, visit this link:{" "}
+          <a href="https://docs.tellor.io/tellor/whitepaper/tellor-oracle-overview/monetary-policy#tellor-treasuries">
+            Tellor's Monetary Policy
           </a>
         </h3>
         <div className="Hero__CTAContainer">
-          <div className="Hero__CTAColumn">
-            <h2>Click here to vote in favor of this proposal</h2>
-            <button
-              onClick={() => handleVote(true)}
-              className="Hero__VoteInFavor"
-            >
-              Vote in Favor
-            </button>
-          </div>
-          <div className="Hero__CTAColumn">
-            <h2>Click here to vote in opposition of this proposal</h2>
-            <button
-              onClick={() => handleVote(false)}
-              className="Hero__VoteInOpposition"
-            >
-              Vote in Opposition
-            </button>
+          <div className="Hero__MainTable">
+            <IssuedTreasuries currAddr={currAddr} signer={signer} />
+            <BoughtTreasuries currAddr={currAddr} signer={signer} />
+            <PaidTreasuries currAddr={currAddr} signer={signer} />
           </div>
         </div>
       </div>

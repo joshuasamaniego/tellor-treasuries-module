@@ -11,69 +11,18 @@
   align-content: center;
 }
 .Hero__View h2 {
-  font-weight: 500;
-  font-size: 1.25rem !important;
-  line-height: 1.5rem !important;
-  margin: 2% 0;
-}
-.Hero__LinkToWhitePaper {
-  margin: 2% 0;
-}
-.Hero__LinkToWhitePaper a {
-  font-weight: 500;
-  font-size: 1.05rem !important;
-  line-height: 1.5rem !important;
-  color: #262626;
+  font-size: 28px;
 }
 .Hero__CTAContainer {
   margin-top: 50px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.Hero__CTAColumn {
+.Hero__MainTable {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0 2%;
-}
-.Hero__CTAColumn h2 {
-  margin-bottom: 10%;
-}
-.Hero__VoteInFavor {
-  font-size: 1rem !important;
-  line-height: 1.5rem !important;
-  background: linear-gradient(90deg, #2dfc9f 0%, #00fb89 100%);
-  color: #555555;
-  box-sizing: border-box;
-  padding: 14px 40px;
-  height: 50px;
-  width: auto;
-  border: none;
-  border-radius: 25px;
-  font-weight: 500;
-  font-family: "Inconsolata", monospace;
-}
-.Hero__VoteInFavor:hover {
-  cursor: pointer;
-}
-.Hero__VoteInOpposition {
-  font-size: 1rem !important;
-  line-height: 1.5rem !important;
-  background-color: #fafafa;
-  color: #555555;
-  box-sizing: border-box;
-  padding: 12px 40px;
-  height: 50px;
-  width: fit-content;
-  border: 2px solid #2dfc9f;
-  border-radius: 25px;
-  font-weight: 500;
-  font-family: "Inconsolata", monospace;
-}
-.Hero__VoteInOpposition:hover {
-  cursor: pointer;
 }
 
 /* MEDIA QUERIES */

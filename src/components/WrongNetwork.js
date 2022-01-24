@@ -10,10 +10,13 @@ function WrongNetwork() {
   return (
     <div className="WrongNetwork__Container">
       <Tellor className="WrongNetwork__Swoosh" />
+      <h1>Currently this app supports the following networks: </h1>
+      <h1>Mainnet</h1>
+      <h1>Rinkeby</h1>
+      <h1>Ropsten</h1>
       <h1>
-        To vote, please use MetaMask to change to Rinkeby or Mainnet networks.
+        Please use MetaMask to change to one of these networks. Thank you!
       </h1>
-      <h1>Thank you!</h1>
     </div>
   );
 }

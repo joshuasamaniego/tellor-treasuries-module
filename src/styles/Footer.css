@@ -16,6 +16,8 @@
   align-items: center;
   background: #262626;
   padding: 100px 0px 140px;
+  position: relative;
+  z-index: -10;
 }
 .Footer__Left {
   display: flex;

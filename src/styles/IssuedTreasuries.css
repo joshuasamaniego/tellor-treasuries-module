@@ -1,0 +1,35 @@
+.IssuedTreasuries__Container {
+  width: 70vw;
+}
+.IssuedTreasuries__MainTable {
+  width: 100%;
+  height: fit-content;
+  border: 1px solid red;
+}
+.firstRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.firstRow > div {
+  margin: 0;
+}
+.firstRow > div > p {
+  font-size: 14px;
+  padding-right: 10px;
+}
+#claimModalButton:hover {
+  background-color: #2dfc9f;
+  color: white;
+}
+#claimModalButton:focus {
+  background-color: #2dfc9f;
+  color: white;
+}
+.claimFormExpanded {
+  margin-top: 10px;
+  border-radius: 0;
+  padding: 2%;
+  border: none;
+}

@@ -7,6 +7,10 @@ import Loader from "./components/Loader";
 import PleaseConnect from "./components/PleaseConnect";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { ethers } from "ethers";
+//Graph
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+//Utils
+import { chains } from "./utils/chains";
 
 const tellorGovMainnet = "0x51d4088d4EeE00Ae4c55f46E0673e9997121DB00";
 const tellorGovRinkeby = "0xA64Bb0078eB80c97484f3f09Adb47b9B73CBcA00";
@@ -28,29 +32,63 @@ if (typeof window.ethereum !== "undefined") {
         tellorGovMainnet: tellorGovMainnet,
         tellorGovRinkeby: tellorGovRinkeby,
       };
+      //Apollo Clients
+      let clientM = new ApolloClient({
+        uri: chains[1].subgraphURL,
+        //Look into what InMemoryCache does
+        cache: new InMemoryCache(),
+      });
+      let clientRop = new ApolloClient({
+        uri: chains[3].subgraphURL,
+        //Look into what InMemoryCache does
+        cache: new InMemoryCache(),
+      });
+      let clientRink = new ApolloClient({
+        uri: chains[4].subgraphURL,
+        //Look into what InMemoryCache does
+        cache: new InMemoryCache(),
+      });
 
       if (res.chainId === "0x1") {
-        appContext.chainId = "0x1";
+        appContext.chainId = "Mainnet";
         appContext.currentAddress = ethers.utils.getAddress(
           res.selectedAddress
         );
 
         ReactDOM.render(
-          <AppContext.Provider value={appContext}>
-            <App />
-          </AppContext.Provider>,
+          <ApolloProvider client={clientM}>
+            <AppContext.Provider value={appContext}>
+              <App />
+            </AppContext.Provider>
+          </ApolloProvider>,
           document.getElementById("root")
         );
       } else if (res.chainId === "0x4") {
-        appContext.chainId = "0x4";
+        appContext.chainId = "Rinkeby";
         appContext.currentAddress = ethers.utils.getAddress(
           res.selectedAddress
         );
 
         ReactDOM.render(
-          <AppContext.Provider value={appContext}>
-            <App />
-          </AppContext.Provider>,
+          <ApolloProvider client={clientRink}>
+            <AppContext.Provider value={appContext}>
+              <App />
+            </AppContext.Provider>
+          </ApolloProvider>,
+          document.getElementById("root")
+        );
+      } else if (res.chainId === "0x3") {
+        appContext.chainId = "Ropsten";
+        appContext.currentAddress = ethers.utils.getAddress(
+          res.selectedAddress
+        );
+
+        ReactDOM.render(
+          <ApolloProvider client={clientRop}>
+            <AppContext.Provider value={appContext}>
+              <App />
+            </AppContext.Provider>
+          </ApolloProvider>,
           document.getElementById("root")
         );
       } else if (res.chainId === null) {
