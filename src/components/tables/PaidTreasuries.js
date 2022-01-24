@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
+import "../../styles/AllTables.css";
 import { EventContext } from "../../App";
 import { AppContext } from "../../index";
 import { truncateAddr } from "../../utils/helpers";
 import NoData from "../global/NoData";
+import Button from "../global/Button";
 
 function PaidTreasuries({ currAddr, signer }) {
   //Context
@@ -34,7 +36,7 @@ function PaidTreasuries({ currAddr, signer }) {
   console.log("paidData", paidData);
 
   return (
-    <div>
+    <div className="AllTables__Container">
       <h2>{`Treasuries Paid to ${
         currAddr.length > 0
           ? truncateAddr(currAddr)
@@ -42,15 +44,16 @@ function PaidTreasuries({ currAddr, signer }) {
       }`}</h2>
       {paidData ? (
         <table>
-          <thead>
+          <thead className="PaidTreasuries__Header">
             <tr>
               <th>Paid Treasury</th>
               <th>Rate</th>
               <th>Payment Amount</th>
               <th>Date Paid</th>
+              <th>View</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="PaidTreasuries__Body">
             {paidData &&
               paidData.map((event) => (
                 <tr key={event.id}>
@@ -58,6 +61,9 @@ function PaidTreasuries({ currAddr, signer }) {
                   <td>{event.rate}</td>
                   <td>{event.amountPaid}</td>
                   <td>{event.datePaid}</td>
+                  <td>
+                    <Button children={"View on Etherscan"} />
+                  </td>
                 </tr>
               ))}
           </tbody>

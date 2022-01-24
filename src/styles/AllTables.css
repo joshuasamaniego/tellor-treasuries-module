@@ -1,0 +1,198 @@
+.AllTables__Container {
+  width: 75vw;
+  margin-bottom: 50px;
+}
+.AllTables__Container h2 {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 32px;
+}
+table {
+  width: 100%;
+  height: auto;
+}
+
+/*   ISSUED TREASURIES   */
+.IssuedTreasuries__Header > tr {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #555555;
+  flex: 1;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(1) {
+  flex: 0.2;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(2) {
+  flex: 0.1;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(3) {
+  flex: 0.1;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(4) {
+  flex: 0.1;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(5) {
+  flex: 0.25;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(6) {
+  flex: 0.05;
+}
+.IssuedTreasuries__Header > tr > th:nth-of-type(7) {
+  flex: 0.2;
+}
+/* Body */
+.IssuedTreasuries__Body > tr {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #555555;
+  flex: 1;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(1) {
+  flex: 0.2;
+  justify-self: center;
+  align-self: center;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(2) {
+  flex: 0.1;
+  justify-self: center;
+  align-self: center;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(3) {
+  flex: 0.1;
+  justify-self: center;
+  align-self: center;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(4) {
+  flex: 0.1;
+  justify-self: center;
+  align-self: center;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(5) {
+  flex: 0.25;
+  justify-self: center;
+  align-self: center;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(6) {
+  flex: 0.05;
+  justify-self: center;
+  align-self: center;
+}
+.IssuedTreasuries__Body > tr > td:nth-of-type(7) {
+  flex: 0.2;
+  justify-self: center;
+  align-self: center;
+}
+
+/*   BOUGHT TREASURIES   */
+.BoughtTreasuries__Header > tr {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #555555;
+  flex: 1;
+}
+.BoughtTreasuries__Header > tr > th:nth-of-type(1) {
+  flex: 0.25;
+}
+.BoughtTreasuries__Header > tr > th:nth-of-type(2) {
+  flex: 0.25;
+}
+.BoughtTreasuries__Header > tr > th:nth-of-type(3) {
+  flex: 0.25;
+}
+.BoughtTreasuries__Header > tr > th:nth-of-type(4) {
+  flex: 0.25;
+}
+/* Body */
+.BoughtTreasuries__Body > tr {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #555555;
+  flex: 1;
+}
+.BoughtTreasuries__Body > tr > td:nth-of-type(1) {
+  flex: 0.25;
+  justify-self: center;
+  align-self: center;
+}
+.BoughtTreasuries__Body > tr > td:nth-of-type(2) {
+  flex: 0.25;
+  justify-self: center;
+  align-self: center;
+}
+.BoughtTreasuries__Body > tr > td:nth-of-type(3) {
+  flex: 0.25;
+  justify-self: center;
+  align-self: center;
+}
+.BoughtTreasuries__Body > tr > td:nth-of-type(4) {
+  flex: 0.25;
+  justify-self: center;
+  align-self: center;
+}
+
+/*   PAID TREASURIES   */
+.PaidTreasuries__Header > tr {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #555555;
+  flex: 1;
+}
+.PaidTreasuries__Header > tr > th:nth-of-type(1) {
+  flex: 0.2;
+}
+.PaidTreasuries__Header > tr > th:nth-of-type(2) {
+  flex: 0.1;
+}
+.PaidTreasuries__Header > tr > th:nth-of-type(3) {
+  flex: 0.2;
+}
+.PaidTreasuries__Header > tr > th:nth-of-type(4) {
+  flex: 0.3;
+}
+.PaidTreasuries__Header > tr > th:nth-of-type(5) {
+  flex: 0.2;
+}
+/* Body */
+.PaidTreasuries__Body > tr {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #555555;
+  flex: 1;
+}
+.PaidTreasuries__Body > tr > td:nth-of-type(1) {
+  flex: 0.2;
+  justify-self: center;
+  align-self: center;
+}
+.PaidTreasuries__Body > tr > td:nth-of-type(2) {
+  flex: 0.1;
+  justify-self: center;
+  align-self: center;
+}
+.PaidTreasuries__Body > tr > td:nth-of-type(3) {
+  flex: 0.2;
+  justify-self: center;
+  align-self: center;
+}
+.PaidTreasuries__Body > tr > td:nth-of-type(4) {
+  flex: 0.3;
+  justify-self: center;
+  align-self: center;
+}
+.PaidTreasuries__Body > tr > td:nth-of-type(5) {
+  flex: 0.2;
+  justify-self: center;
+  align-self: center;
+}

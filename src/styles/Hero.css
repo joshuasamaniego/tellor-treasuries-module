@@ -12,6 +12,16 @@
 }
 .Hero__View h2 {
   font-size: 28px;
+  margin: 10px 0;
+}
+.Hero__View h3 {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 22px;
+  margin: 10px 0;
+}
+.Hero__View h3 > a {
+  color: #555555;
 }
 .Hero__CTAContainer {
   margin-top: 50px;

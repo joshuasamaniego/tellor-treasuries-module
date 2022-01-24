@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import "../../styles/IssuedTreasuries.css";
+import "../../styles/AllTables.css";
 import { EventContext } from "../../App";
 import { AppContext } from "../../index";
 //Utils
@@ -28,10 +28,10 @@ function IssuedTreasuries({ currAddr, signer }) {
   console.log("issuedData", issuedData);
 
   return (
-    <div className="IssuedTreasuries__Container">
+    <div className="AllTables__Container">
       <h2>All Issued Treasuries</h2>
       <table>
-        <thead>
+        <thead className="IssuedTreasuries__Header">
           <tr>
             <th>Issued Treasury</th>
             <th>Max Amount</th>
@@ -39,10 +39,10 @@ function IssuedTreasuries({ currAddr, signer }) {
             <th>Duration</th>
             <th>Payout Date</th>
             <th>Active</th>
-            <th>Buy Treasury</th>
+            <th>Buy</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="IssuedTreasuries__Body">
           {issuedData &&
             issuedData.map((event) => (
               <tr key={event.id}>

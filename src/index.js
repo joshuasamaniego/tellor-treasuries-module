@@ -31,6 +31,8 @@ if (typeof window.ethereum !== "undefined") {
         signer: signer,
         tellorGovMainnet: tellorGovMainnet,
         tellorGovRinkeby: tellorGovRinkeby,
+        etherscanLink: "",
+        contractAddress: "",
       };
       //Apollo Clients
       let clientM = new ApolloClient({
@@ -54,6 +56,10 @@ if (typeof window.ethereum !== "undefined") {
         appContext.currentAddress = ethers.utils.getAddress(
           res.selectedAddress
         );
+        appContext.contractAddress =
+          "0x3b0f3eaEFaAc9f8F7FDe406919ecEb5270fE0607";
+        appContext.etherscanLink =
+          "https://etherscan.io/address/0x3b0f3eaEFaAc9f8F7FDe406919ecEb5270fE0607";
 
         ReactDOM.render(
           <ApolloProvider client={clientM}>
@@ -68,6 +74,10 @@ if (typeof window.ethereum !== "undefined") {
         appContext.currentAddress = ethers.utils.getAddress(
           res.selectedAddress
         );
+        appContext.contractAddress =
+          "0x7d69B996dee32956908f8876cE42bA09808308EA";
+        appContext.etherscanLink =
+          "https://rinkeby.etherscan.io/address/0x7d69b996dee32956908f8876ce42ba09808308ea";
 
         ReactDOM.render(
           <ApolloProvider client={clientRink}>
@@ -82,6 +92,10 @@ if (typeof window.ethereum !== "undefined") {
         appContext.currentAddress = ethers.utils.getAddress(
           res.selectedAddress
         );
+        appContext.contractAddress =
+          "0xb7C38be763D1eebcBF23F99678507ca4621448A0";
+        appContext.etherscanLink =
+          "https://ropsten.etherscan.io/address/0xb7C38be763D1eebcBF23F99678507ca4621448A0";
 
         ReactDOM.render(
           <ApolloProvider client={clientRop}>

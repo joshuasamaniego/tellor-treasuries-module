@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import "../../styles/AllTables.css";
 import { EventContext } from "../../App";
 import { AppContext } from "../../index";
 import { truncateAddr } from "../../utils/helpers";
@@ -38,23 +39,23 @@ function BoughtTreasuries({ currAddr, signer }) {
   console.log("boughtData", boughtData);
 
   return (
-    <div>
-      <h2>{`Treasuries Bought By ${
+    <div className="AllTables__Container">
+      <h2>{`Treasuries Bought by ${
         currAddr.length > 0
           ? truncateAddr(currAddr)
           : truncateAddr(appData.currentAddress)
       }`}</h2>
       {boughtData ? (
         <table>
-          <thead>
+          <thead className="BoughtTreasuries__Header">
             <tr>
               <th>Bought Treasury</th>
               <th>Amount Bought</th>
               <th>Payout Date</th>
-              <th>Payout Treasury</th>
+              <th>Payout</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="BoughtTreasuries__Body">
             {boughtData &&
               boughtData.map((event) => (
                 <tr key={event.id}>
