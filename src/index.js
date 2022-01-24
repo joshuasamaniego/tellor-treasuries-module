@@ -1,17 +1,110 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import WrongNetwork from "./components/WrongNetwork";
+import Loader from "./components/Loader";
+import PleaseConnect from "./components/PleaseConnect";
+import detectEthereumProvider from "@metamask/detect-provider";
+import { ethers } from "ethers";
+//Graph
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+//Utils
+import { chains } from "./utils/chains";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const tellorGovMainnet = "0x51d4088d4EeE00Ae4c55f46E0673e9997121DB00";
+const tellorGovRinkeby = "0xA64Bb0078eB80c97484f3f09Adb47b9B73CBcA00";
+export const AppContext = React.createContext();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+if (typeof window.ethereum !== "undefined") {
+  detectEthereumProvider()
+    .then((res) => {
+      const provider = new ethers.providers.Web3Provider(
+        window.ethereum,
+        "any"
+      );
+      const signer = provider.getSigner();
+      let appContext = {
+        chainId: "",
+        currentAddress: "",
+        provider: provider,
+        signer: signer,
+        tellorGovMainnet: tellorGovMainnet,
+        tellorGovRinkeby: tellorGovRinkeby,
+      };
+      //Apollo Clients
+      let clientM = new ApolloClient({
+        uri: chains[1].subgraphURL,
+        //Look into what InMemoryCache does
+        cache: new InMemoryCache(),
+      });
+      let clientRop = new ApolloClient({
+        uri: chains[3].subgraphURL,
+        //Look into what InMemoryCache does
+        cache: new InMemoryCache(),
+      });
+      let clientRink = new ApolloClient({
+        uri: chains[4].subgraphURL,
+        //Look into what InMemoryCache does
+        cache: new InMemoryCache(),
+      });
+
+      if (res.chainId === "0x1") {
+        appContext.chainId = "Mainnet";
+        appContext.currentAddress = ethers.utils.getAddress(
+          res.selectedAddress
+        );
+
+        ReactDOM.render(
+          <ApolloProvider client={clientM}>
+            <AppContext.Provider value={appContext}>
+              <App />
+            </AppContext.Provider>
+          </ApolloProvider>,
+          document.getElementById("root")
+        );
+      } else if (res.chainId === "0x4") {
+        appContext.chainId = "Rinkeby";
+        appContext.currentAddress = ethers.utils.getAddress(
+          res.selectedAddress
+        );
+
+        ReactDOM.render(
+          <ApolloProvider client={clientRink}>
+            <AppContext.Provider value={appContext}>
+              <App />
+            </AppContext.Provider>
+          </ApolloProvider>,
+          document.getElementById("root")
+        );
+      } else if (res.chainId === "0x3") {
+        appContext.chainId = "Ropsten";
+        appContext.currentAddress = ethers.utils.getAddress(
+          res.selectedAddress
+        );
+
+        ReactDOM.render(
+          <ApolloProvider client={clientRop}>
+            <AppContext.Provider value={appContext}>
+              <App />
+            </AppContext.Provider>
+          </ApolloProvider>,
+          document.getElementById("root")
+        );
+      } else if (res.chainId === null) {
+        ReactDOM.render(<Loader />, document.getElementById("root"));
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        ReactDOM.render(<WrongNetwork />, document.getElementById("root"));
+      }
+    })
+    .catch((err) => {
+      console.log("MetaMask Error: ", err);
+      ReactDOM.render(<PleaseConnect />, document.getElementById("root"));
+    });
+} else {
+  window.alert("Please install MetaMask");
+  window.location.assign("https://metamask.io/");
+}
