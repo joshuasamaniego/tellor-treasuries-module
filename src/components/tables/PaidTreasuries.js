@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/AllTables.css";
+import "../../styles/Button.css";
 import { EventContext } from "../../App";
 import { AppContext } from "../../index";
 import { truncateAddr } from "../../utils/helpers";
 import NoData from "../global/NoData";
-import Button from "../global/Button";
 
 function PaidTreasuries({ currAddr, signer }) {
   //Context
@@ -35,6 +35,13 @@ function PaidTreasuries({ currAddr, signer }) {
   console.log("appData", appData);
   console.log("paidData", paidData);
 
+  //Function Handlers
+  const handleSelect = (treasury) => {
+    console.log(treasury);
+    // setSelected(treasury);
+    // setBuying(true);
+  };
+
   return (
     <div className="AllTables__Container">
       <h2>{`Treasuries Paid to ${
@@ -49,20 +56,25 @@ function PaidTreasuries({ currAddr, signer }) {
               <th>Paid Treasury</th>
               <th>Rate</th>
               <th>Payment Amount</th>
-              <th>Date Paid</th>
+              <th>Date Paid Out</th>
               <th>View</th>
             </tr>
           </thead>
           <tbody className="PaidTreasuries__Body">
             {paidData &&
-              paidData.map((event) => (
-                <tr key={event.id}>
-                  <td>{event.treasuryName}</td>
-                  <td>{event.rate}</td>
-                  <td>{event.amountPaid}</td>
-                  <td>{event.datePaid}</td>
+              paidData.map((treasury) => (
+                <tr key={treasury.id}>
+                  <td>{treasury.treasuryName}</td>
+                  <td>{treasury.rate}</td>
+                  <td>{treasury.amountPaid}</td>
+                  <td>{treasury.datePaid}</td>
                   <td>
-                    <Button children={"View on Etherscan"} />
+                    <button
+                      onClick={() => handleSelect(treasury)}
+                      className="Global__Button"
+                    >
+                      View on Etherscan
+                    </button>
                   </td>
                 </tr>
               ))}

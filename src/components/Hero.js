@@ -57,7 +57,12 @@ function Hero({ currAddr, signer }) {
         </h3>
         <div className="Hero__CTAContainer">
           <div className="Hero__MainTable">
-            <IssuedTreasuries setBuying={setBuying} setSelected={setSelected} />
+            <IssuedTreasuries
+              currAddr={currAddr}
+              signer={signer}
+              setBuying={setBuying}
+              setSelected={setSelected}
+            />
             <BoughtTreasuries currAddr={currAddr} signer={signer} />
             <PaidTreasuries currAddr={currAddr} signer={signer} />
           </div>

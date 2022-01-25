@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/AllTables.css";
+import "../../styles/Button.css";
 import { EventContext } from "../../App";
 import { AppContext } from "../../index";
 import { truncateAddr } from "../../utils/helpers";
 //Utils
-import Button from "../global/Button";
 import NoData from "../global/NoData";
 
 function BoughtTreasuries({ currAddr, signer }) {
@@ -35,9 +35,6 @@ function BoughtTreasuries({ currAddr, signer }) {
     };
   }, [treasuryData, currAddr, appData.currentAddress]);
 
-  console.log("appData", appData);
-  console.log("boughtData", boughtData);
-
   return (
     <div className="AllTables__Container">
       <h2>{`Treasuries Bought by ${
@@ -51,20 +48,18 @@ function BoughtTreasuries({ currAddr, signer }) {
             <tr>
               <th>Bought Treasury</th>
               <th>Amount Bought</th>
-              <th>Payout Date</th>
-              <th>Payout</th>
+              <th>Date Bought</th>
+              <th>Date of Payout </th>
             </tr>
           </thead>
           <tbody className="BoughtTreasuries__Body">
             {boughtData &&
-              boughtData.map((event) => (
-                <tr key={event.id}>
-                  <td>{event.treasuryName}</td>
-                  <td>{event.amountBought}</td>
-                  <td>{event.payoutDate}</td>
-                  <td>
-                    <Button children={"Payout Treasury"} />
-                  </td>
+              boughtData.map((treasury) => (
+                <tr key={treasury.id}>
+                  <td>{treasury.treasuryName}</td>
+                  <td>{treasury.amountBought}</td>
+                  <td>{treasury.dateBought}</td>
+                  <td>{treasury.payoutDate}</td>
                 </tr>
               ))}
           </tbody>

@@ -103,6 +103,8 @@ function App() {
           clone.dateStarted,
           clone.durationSeconds
         );
+        clone.active = activeHelper(clone.dateStarted, clone.durationSeconds);
+        clone.dateBought = payoutTimerHelper(clone.timestamp);
         boughtArray.push(clone);
       });
     treasuryEvents.data.treasuryPaidEntities &&
