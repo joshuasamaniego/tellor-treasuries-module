@@ -33,11 +33,11 @@ function PaidTreasuries({ currAddr, signer }) {
   }, [treasuryData, currAddr, appData.currentAddress]);
 
   //Function Handlers
-  const handleSelect = (treasury) => {
-    console.log(treasury);
-    // setSelected(treasury);
-    // setBuying(true);
-  };
+  // const handleSelect = (treasury) => {
+  //   console.log(treasury);
+  //   // setSelected(treasury);
+  //   // setBuying(true);
+  // };
 
   return (
     <div className="AllTables__Container">
