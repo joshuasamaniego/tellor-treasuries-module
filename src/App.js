@@ -110,13 +110,14 @@ function App() {
     treasuryEvents.data.treasuryPaidEntities &&
       treasuryEvents.data.treasuryPaidEntities.forEach((entity) => {
         let clone = JSON.parse(JSON.stringify(entity));
+        console.log("Original Entity", entity);
         clone.duration = timeConverter(clone.duration);
         clone.maxAmount = `${ethers.utils.formatEther(clone.maxAmount)} TRB`;
         clone.totalLocked = `${ethers.utils.formatEther(
           clone.totalLocked
         )} TRB`;
         clone.rate = `${clone.rate / 100}%`;
-        clone.amountPaid = `${clone.amountPaid} TRB`;
+        clone.amountPaid = `${ethers.utils.formatEther(clone.amountPaid)} TRB`;
         clone.investor = ethers.utils.getAddress(clone.investor);
         clone.treasuryName = nameHelper(clone.dateStarted);
         clone.datePaid = payoutTimerHelper(clone.timestamp);

@@ -148,19 +148,16 @@ table {
   flex: 1;
 }
 .PaidTreasuries__Header > tr > th:nth-of-type(1) {
-  flex: 0.2;
+  flex: 0.25;
 }
 .PaidTreasuries__Header > tr > th:nth-of-type(2) {
-  flex: 0.1;
+  flex: 0.25;
 }
 .PaidTreasuries__Header > tr > th:nth-of-type(3) {
-  flex: 0.2;
+  flex: 0.25;
 }
 .PaidTreasuries__Header > tr > th:nth-of-type(4) {
-  flex: 0.3;
-}
-.PaidTreasuries__Header > tr > th:nth-of-type(5) {
-  flex: 0.2;
+  flex: 0.25;
 }
 /* Body */
 .PaidTreasuries__Body > tr {
@@ -172,27 +169,22 @@ table {
   flex: 1;
 }
 .PaidTreasuries__Body > tr > td:nth-of-type(1) {
-  flex: 0.2;
+  flex: 0.25;
   justify-self: center;
   align-self: center;
 }
 .PaidTreasuries__Body > tr > td:nth-of-type(2) {
-  flex: 0.1;
+  flex: 0.25;
   justify-self: center;
   align-self: center;
 }
 .PaidTreasuries__Body > tr > td:nth-of-type(3) {
-  flex: 0.2;
+  flex: 0.25;
   justify-self: center;
   align-self: center;
 }
 .PaidTreasuries__Body > tr > td:nth-of-type(4) {
-  flex: 0.3;
-  justify-self: center;
-  align-self: center;
-}
-.PaidTreasuries__Body > tr > td:nth-of-type(5) {
-  flex: 0.2;
+  flex: 0.25;
   justify-self: center;
   align-self: center;
 }

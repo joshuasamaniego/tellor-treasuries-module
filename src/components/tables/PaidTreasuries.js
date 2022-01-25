@@ -32,9 +32,6 @@ function PaidTreasuries({ currAddr, signer }) {
     };
   }, [treasuryData, currAddr, appData.currentAddress]);
 
-  console.log("appData", appData);
-  console.log("paidData", paidData);
-
   //Function Handlers
   const handleSelect = (treasury) => {
     console.log(treasury);
@@ -57,7 +54,7 @@ function PaidTreasuries({ currAddr, signer }) {
               <th>Rate</th>
               <th>Payment Amount</th>
               <th>Date Paid Out</th>
-              <th>View</th>
+              {/* <th>View</th> */}
             </tr>
           </thead>
           <tbody className="PaidTreasuries__Body">
@@ -68,14 +65,15 @@ function PaidTreasuries({ currAddr, signer }) {
                   <td>{treasury.rate}</td>
                   <td>{treasury.amountPaid}</td>
                   <td>{treasury.datePaid}</td>
-                  <td>
+                  {/* IMPLEMENT IN THE FUTURE */}
+                  {/* <td>
                     <button
                       onClick={() => handleSelect(treasury)}
                       className="Global__Button"
                     >
                       View on Etherscan
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
           </tbody>

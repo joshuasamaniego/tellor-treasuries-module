@@ -28,8 +28,6 @@ function Hero({ currAddr, signer }) {
     return <MetaMaskErrModal ref={ref}>{props.children}</MetaMaskErrModal>;
   });
 
-  console.log("loading", loading);
-
   return (
     <div className="Hero">
       <div className="Hero__View">
@@ -62,6 +60,10 @@ function Hero({ currAddr, signer }) {
               signer={signer}
               setBuying={setBuying}
               setSelected={setSelected}
+              setErrMessage={setErrMessage}
+              setLoading={setLoading}
+              setTxnHash={setTxnHash}
+              setBought={setBought}
             />
             <BoughtTreasuries currAddr={currAddr} signer={signer} />
             <PaidTreasuries currAddr={currAddr} signer={signer} />

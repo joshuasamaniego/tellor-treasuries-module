@@ -17,8 +17,10 @@ function TxnModal({ chainId, address, bought, setBought, txnHash }) {
         <div className="TxnModal__Message">
           <h1>
             {address
-              ? `Thank you for buying a treasury, ${truncateAddr(address)}!`
-              : "Thank you for buying a treasury!"}
+              ? `Thank you for interacting with Tellor Treasuries, ${truncateAddr(
+                  address
+                )}!`
+              : "Thank you for interacting with Tellor Treasuries!"}
           </h1>
           <p>To view your transaction on etherscan, click below:</p>
           {txnHash ? (

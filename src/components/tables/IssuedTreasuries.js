@@ -11,7 +11,15 @@ import TellorTreasuryABI from "../../utils/TellorTreasuryABI.json";
 //Web3
 import { ethers } from "ethers";
 
-function IssuedTreasuries({ currAddr, signer, setBuying, setSelected }) {
+function IssuedTreasuries({
+  currAddr,
+  setBuying,
+  setSelected,
+  setErrMessage,
+  setLoading,
+  setTxnHash,
+  setBought,
+}) {
   //Context
   const treasuryData = useContext(EventContext);
   const appData = useContext(AppContext);
@@ -27,86 +35,15 @@ function IssuedTreasuries({ currAddr, signer, setBuying, setSelected }) {
     };
   }, [treasuryData]);
 
-  // const handleVote = async (bool) => {
-  //   if (!data) return;
-
-  //   let contract;
-  //   let didAlreadyVote;
-
-  //   if (data.chainId === "0x1") {
-  //     contract = new ethers.Contract(
-  //       data.tellorGovMainnet,
-  //       TellorGovABI,
-  //       Object.keys(signer) > 0 ? signer : data.signer
-  //     );
-
-  //     didAlreadyVote = await contract.didVote(
-  //       voteIdMainnet,
-  //       currAddr.length > 0 ? currAddr : data.currentAddress
-  //     );
-
-  //     if (!didAlreadyVote) {
-  //       setLoading(true);
-  //       try {
-  //         contract
-  //           .vote(voteIdMainnet, bool, false)
-  //           .then((res) => {
-  //             setLoading(false);
-  //             setTxnHash(res.hash);
-  //             setJustVoted(true);
-  //           })
-  //           .catch((err) => {
-  //             console.log("MetaMask Txn Err: ", err);
-  //             setLoading(false);
-  //             setErrMessage(err.message);
-  //           });
-  //       } catch (err) {
-  //         // console.log("ERR::: ", err.message);
-  //         setErrMessage(err.message);
-  //       }
-  //     } else {
-  //       setErrMessage(
-  //         "Execution reverted: You already voted at this address on this network. Thank you for voting!"
-  //       );
-  //     }
-  //   } else if (data.chainId === "0x4") {
-  //     contract = new ethers.Contract(
-  //       data.tellorGovRinkeby,
-  //       TellorGovABI,
-  //       Object.keys(signer) > 0 ? signer : data.signer
-  //     );
-
-  //     didAlreadyVote = await contract.didVote(
-  //       voteIdRinkeby,
-  //       currAddr.length > 0 ? currAddr : data.currentAddress
-  //     );
-
-  //     if (!didAlreadyVote) {
-  //       setLoading(true);
-  //       try {
-  //         contract
-  //           .vote(voteIdRinkeby, bool, false)
-  //           .then((res) => {
-  //             setLoading(false);
-  //             setTxnHash(res.hash);
-  //             setJustVoted(true);
-  //           })
-  //           .catch((err) => {
-  //             //console.log("MetaMask Txn Err: ", err);
-  //             setLoading(false);
-  //             setErrMessage(err.message);
-  //           });
-  //       } catch (err) {
-  //         // console.log("MetaMask Txn Err:: ", err.message);
-  //         setErrMessage(err.message);
-  //       }
-  //     } else {
-  //       setErrMessage(
-  //         "Execution reverted: You already voted at this address on this network. Thank you for voting!"
-  //       );
-  //     }
-  //   }
-  // };
+  //Function Handlers
+  const handleSelect = (treasury) => {
+    if (treasury.active) {
+      setSelected(treasury);
+      setBuying(true);
+    } else {
+      handlePayout(treasury);
+    }
+  };
 
   const handlePayout = (treasury) => {
     if (!issuedData) return;
@@ -114,21 +51,14 @@ function IssuedTreasuries({ currAddr, signer, setBuying, setSelected }) {
 
     let contract;
     let abi;
-    let wasPaid;
+    // let wasPaid;
 
     if (appData.chainId === "Mainnet") {
-    } else if (appData.chainId === "Rinkeby") {
-    } else if (appData.chainId === "Ropsten") {
-      ////////////////////////////////////////
-      //      THIS IS WHERE I LEFT OFF.     //
-      ////////////////////////////////////////
-
-      /* TRY TO SEE IF YOU CAN GET AWAY WITHOUT SEPARATING CHAINS */
       abi = TellorTreasuryABI;
       contract = new ethers.Contract(
         appData.contractAddress,
         abi,
-        Object.keys(signer) > 0 ? signer : appData.signer
+        appData.signer
       );
 
       try {
@@ -137,21 +67,74 @@ function IssuedTreasuries({ currAddr, signer, setBuying, setSelected }) {
             treasury.treasuryId,
             currAddr.length > 0 ? currAddr : appData.currentAddress
           )
-          .then((response) => console.log(response));
+          .then((response) => {
+            if (!response) {
+              setLoading(true);
+              contract
+                .payTreasury(
+                  currAddr.length > 0 ? currAddr : appData.currentAddress,
+                  treasury.treasuryId
+                )
+                .then((res) => {
+                  setLoading(false);
+                  setTxnHash(res.hash);
+                  setBought(true);
+                })
+                .catch((err) => {
+                  setErrMessage(err.message);
+                  setLoading(false);
+                });
+            } else {
+              setErrMessage("This treasury was already paid out.");
+            }
+          })
+          .catch((err) => {
+            setErrMessage(err.message);
+          });
       } catch (err) {
-        console.log(err);
+        setErrMessage(err.message);
       }
-    }
-  };
+    } else if (appData.chainId === "Ropsten" || appData.chainId === "Rinkeby") {
+      abi = TESTTellorTreasuryABI;
+      contract = new ethers.Contract(
+        appData.contractAddress,
+        abi,
+        appData.signer
+      );
 
-  //Function Handlers
-  const handleSelect = (treasury) => {
-    if (treasury.active) {
-      setSelected(treasury);
-      setBuying(true);
-    } else {
-      console.log(treasury);
-      handlePayout(treasury);
+      try {
+        contract
+          .wasPaid(
+            treasury.treasuryId,
+            currAddr.length > 0 ? currAddr : appData.currentAddress
+          )
+          .then((response) => {
+            if (!response) {
+              setLoading(true);
+              contract
+                .payTreasury(
+                  currAddr.length > 0 ? currAddr : appData.currentAddress,
+                  treasury.treasuryId
+                )
+                .then((res) => {
+                  setLoading(false);
+                  setTxnHash(res.hash);
+                  setBought(true);
+                })
+                .catch((err) => {
+                  setErrMessage(err.message);
+                  setLoading(false);
+                });
+            } else {
+              setErrMessage("This treasury was already paid out.");
+            }
+          })
+          .catch((err) => {
+            setErrMessage(err.message);
+          });
+      } catch (err) {
+        setErrMessage(err.message);
+      }
     }
   };
 

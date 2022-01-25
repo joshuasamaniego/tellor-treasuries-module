@@ -26,6 +26,10 @@ function MetaMaskErrModal({ children }) {
       setErrorMessage(children[0]);
     } else if (children[0] && children[0].length === 45) {
       setErrorMessage(children[0]);
+    } else if (children[0] && children[0].length === 35) {
+      setErrorMessage(children[0]);
+    } else {
+      setErrorMessage(children[0]);
     }
     return () => {
       setErrorMessage("");
